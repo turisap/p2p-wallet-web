@@ -1,16 +1,14 @@
-name: Test PR
+name: Deploy Staging
 
+#on: workflow_dispatch
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
+  push:
+
 
 jobs:
-  test:
+  deploy_stage:
     runs-on: ubuntu-latest
-    environment: development
-    name: Test PR
+#    environment: production
     steps:
       - uses: actions/checkout@v2
 
@@ -27,8 +25,6 @@ jobs:
 
       - name: Build site
         env:
-          # @FIXME in https://p2pvalidator.atlassian.net/browse/PWN-3411
-          CI: false
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
           REACT_APP_BASENAME: ${{ secrets.REACT_APP_BASENAME }}
           REACT_APP_CRYPTO_COMPARE_API_KEY: ${{ secrets.REACT_APP_CRYPTO_COMPARE_API_KEY }}
